@@ -4,15 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyClickGain</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css"> <!-- Vincula el archivo de estilos CSS -->
   </head>
   <body>
     <div id="game">
       <h1>¡Bienvenido a MyClickGain!</h1>
       <p>Puntos: <span id="puntos">0</span></p>
-      <button id="click-button">¡Haz clic!</button> 
-    </div>
+      
+      <button id="click-button">¡Haz clic!</button> <!-- Botón para incrementar puntos -->
+      <br><br>
 
-    <script src="script.js"></script> 
+      <h2>Ranking de los 10 mejores jugadores</h2>
+      <ol id="ranking">
+        <!-- Aquí se mostrarán los 10 mejores puntajes -->
+      </ol>
+      <br><br>
+
+      <!-- Botón para multiplicar puntos -->
+      <button id="multiplier-button">Multiplicar puntos (ver anuncio)</button>
+      
+      <!-- Banner de AdSense (coloca tu código de AdSense aquí) -->
+      <div id="adsense-banner">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"  <!-- Reemplaza con tu ID de cliente -->
+             data-ad-slot="XXXXXXXXXX"           <!-- Reemplaza con tu ID de anuncio -->
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+    
+    <script src="script.js"></script> <!-- Vincula el archivo de script JavaScript -->
   </body>
 </html>
