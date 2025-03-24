@@ -1,10 +1,11 @@
-let clickCount = 0;
+let puntos = 0;
 
-function handleClick() {
-    clickCount++;
-    document.getElementById("puntos").innerText = clickCount;  
-}
+document.getElementById("clickButton").addEventListener("click", function() {
+    puntos++;
+    document.getElementById("puntos").textContent = puntos;
+});
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("click-button").addEventListener("click", handleClick);
+document.getElementById("multiplicador").addEventListener("click", function() {
+    puntos *= 1.5;
+    document.getElementById("puntos").textContent = Math.floor(puntos);
 });
