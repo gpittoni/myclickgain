@@ -7,10 +7,15 @@ body {
 
 #game {
   margin-top: 50px;
+  display: flex;
+  flex-direction: column; /* Esto hace que los elementos se apilen verticalmente */
+  align-items: center; /* Alinea los elementos al centro */
 }
 
 button {
   margin: 10px 0; /* Esto hace que los botones se apilen con un pequeño espacio entre ellos */
+  width: 200px; /* Ajusta el ancho de los botones */
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 /* Estilo del botón de clic */
@@ -21,8 +26,6 @@ button {
   border: none;
   cursor: pointer;
   font-size: 18px;
-  width: 200px; /* Ajusta el ancho */
-  border-radius: 10px;
 }
 
 #click-button:hover {
@@ -35,14 +38,13 @@ button {
   border: none;
   cursor: pointer;
   font-size: 16px;
-  width: 200px; /* Ajusta el ancho */
-  height: 50px; /* Ajusta la altura */
   padding: 0;
+  height: 50px;
 }
 
 #multiplier-button img {
   width: 100%; /* La imagen ocupará todo el espacio del botón */
-  height: 100%;
+  height: 100%; /* Ajusta la altura de la imagen */
   object-fit: cover;
   border-radius: 10px;
 }
