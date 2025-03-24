@@ -22,6 +22,8 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    display: block;
+    margin: 10px auto; /* Asegura que los botones estén centrados y en columna */
 }
 
 #clickButton {
@@ -33,13 +35,7 @@ button {
     background-color: #218838;
 }
 
-#multiplicador {
-    background-image: url("mul.png");
-    background-size: cover;
-    background-position: center;
+#multiplicador img {
     width: 100px;
     height: 50px;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
 }
