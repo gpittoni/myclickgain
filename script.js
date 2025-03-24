@@ -2,7 +2,7 @@ let clickCount = 0;
 
 function handleClick() {
     clickCount++;
-    document.getElementById("puntos").innerText = clickCount;  // Cambié "click-count" por "puntos"
+    document.getElementById("puntos").innerText = clickCount;  
 }
 
 document.addEventListener("DOMContentLoaded", function () {
