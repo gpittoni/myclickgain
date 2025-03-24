@@ -1,76 +1,45 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #1A237E;
-  color: white;
-  text-align: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
 }
 
-#game {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column; /* Asegura que todo se apile en columna */
-  align-items: center; /* Centra todo en el medio */
+h1 {
+    color: #333;
+}
+
+#puntos {
+    font-size: 24px;
+    font-weight: bold;
 }
 
 button {
-  margin: 10px 0; /* Espaciado entre botones */
-  width: 250px; /* Ajusta el ancho de los botones */
-  border-radius: 10px; /* Bordes redondeados */
-  height: 60px; /* Ajustamos la altura para que no queden tan pequeños */
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-/* Estilo del botón de clic */
-#click-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 15px 32px;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
+#clickButton {
+    background-color: #28a745;
+    color: white;
 }
 
-#click-button:hover {
-  background-color: #45a049;
+#clickButton:hover {
+    background-color: #218838;
 }
 
-/* Estilo del botón de multiplicador */
-#multiplier-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0;
-  height: 60px; /* Aseguramos que la altura sea suficiente */
-  width: 250px; /* Ajustamos el tamaño para que se vea bien */
-  display: flex;
-  justify-content: center; /* Centra la imagen dentro del botón */
-  align-items: center; /* Centra la imagen verticalmente */
-}
-
-#multiplier-button img {
-  width: 100%; /* Ocupa todo el ancho del botón */
-  height: 100%; /* Ocupa toda la altura del botón */
-  object-fit: cover; /* Asegura que la imagen mantenga sus proporciones */
-  border-radius: 10px;
-}
-
-#multiplier-button:hover {
-  opacity: 0.8;
-}
-
-/* Estilo del ranking */
-h2 {
-  font-size: 24px;
-  color: white;
-  margin-top: 20px;
-}
-
-#ranking {
-  list-style-type: none;
-  padding: 0;
-}
-
-#ranking li {
-  font-size: 18px;
-  margin: 5px 0;
+#multiplicador {
+    background-image: url("mul.png");
+    background-size: cover;
+    background-position: center;
+    width: 100px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
 }
