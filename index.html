@@ -4,126 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyClickGain</title>
-    <script type="module">
-        // Importar las funciones necesarias del SDK de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getDatabase, ref, set, push, get, child, orderByChild, query, limitToLast } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-        // Configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDyYBWmFdAOycu2_XXUpAKf6poueGP6u_w",
-            authDomain: "myclickgain.firebaseapp.com",
-            databaseURL: "https://myclickgain-default-rtdb.firebaseio.com",
-            projectId: "myclickgain",
-            storageBucket: "myclickgain.appspot.com",
-            messagingSenderId: "363868466611",
-            appId: "1:363868466611:web:92582a22a383e75b8befc6"
-        };
-
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-
-        let puntos = 0;
-        let currentUser = null;
-
-        // Función para sumar un punto
-        function sumarPunto() {
-            puntos += 1;
-            actualizarPuntos();
-        }
-
-        // Función para aplicar el multiplicador del 50%
-        function multiplicador50() {
-            alert("Aquí iría el anuncio.");
-            puntos = Math.round(puntos * 1.5);
-            actualizarPuntos();
-        }
-
-        // Función para actualizar los puntos en la pantalla
-        function actualizarPuntos() {
-            document.getElementById("puntos").textContent = puntos;
-        }
-
-        // Función para guardar el puntaje en Firebase
-        function guardarPuntaje() {
-            if (currentUser) {
-                const puntajeRef = push(ref(db, 'ranking'));
-                set(puntajeRef, {
-                    nombre: currentUser.displayName,
-                    puntos: puntos
-                });
-            }
-        }
-
-        // Función para cargar el ranking desde Firebase
-        function cargarRanking() {
-            const rankingRef = ref(db, 'ranking');
-            const rankingQuery = query(rankingRef, orderByChild('puntos'), limitToLast(10));
-            get(rankingQuery).then((snapshot) => {
-                let rankingHTML = "";
-                let rankingArray = [];
-
-                snapshot.forEach(childSnapshot => {
-                    rankingArray.push(childSnapshot.val());
-                });
-
-                rankingArray.reverse().forEach((jugador, index) => {
-                    rankingHTML += `<p>${index + 1}. ${jugador.nombre}: ${jugador.puntos} puntos</p>`;
-                });
-
-                document.getElementById("ranking").innerHTML = rankingHTML;
-            }).catch(error => {
-                console.error("Error al cargar el ranking:", error);
-            });
-        }
-
-        // Función de login con Google
-        function login() {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then(result => {
-                    currentUser = result.user;
-                    document.getElementById("user-info").innerHTML = `Hola, ${currentUser.displayName}`;
-                    document.getElementById("login-btn").style.display = "none";
-                    document.getElementById("logout-btn").style.display = "block";
-                    cargarRanking();
-                })
-                .catch(error => {
-                    console.error("Error de autenticación:", error);
-                });
-        }
-
-        // Función de logout
-        function logout() {
-            signOut(auth).then(() => {
-                currentUser = null;
-                document.getElementById("user-info").innerHTML = "";
-                document.getElementById("login-btn").style.display = "block";
-                document.getElementById("logout-btn").style.display = "none";
-                cargarRanking();
-            }).catch(error => {
-                console.error("Error al cerrar sesión:", error);
-            });
-        }
-
-        // Escuchar cambios en el estado de autenticación
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                currentUser = user;
-                document.getElementById("user-info").innerHTML = `Hola, ${user.displayName}`;
-                document.getElementById("login-btn").style.display = "none";
-                document.getElementById("logout-btn").style.display = "block";
-                cargarRanking();
-            } else {
-                document.getElementById("user-info").innerHTML = "";
-                document.getElementById("login-btn").style.display = "block";
-                document.getElementById("logout-btn").style.display = "none";
-            }
-        });
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: linear-gradient(to bottom, #1e3c72, #2a5298); color: #ffffff; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { font-size: 2rem; }
+        p { font-size: 1.5rem; }
+        button { font-size: 1.2rem; border: none; padding: 12px 20px; margin: 10px; cursor: pointer; border-radius: 10px; transition: 0.3s; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2); }
+        .btn-click { background: #4CAF50; color: white; }
+        .btn-multiplicar { background: #ff9800; color: white; }
+        .ranking { margin-top: 20px; text-align: left; background: rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 10px; }
+        .user-info { margin: 20px; color: white; }
+    </style>
 </head>
 <body>
     <h1>MyClickGain</h1>
@@ -138,5 +31,106 @@
     
     <button id="login-btn" onclick="login()">Iniciar sesión con Google</button>
     <button id="logout-btn" style="display:none;" onclick="logout()">Cerrar sesión</button>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            databaseURL: "https://myclickgain-default-rtdb.firebaseio.com/",
+            apiKey: "TU_API_KEY", // Necesitarás tu propia API Key de Firebase
+            authDomain: "myclickgain.firebaseapp.com",
+            projectId: "myclickgain",
+            storageBucket: "myclickgain.appspot.com",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        let puntos = 0;
+        let currentUser = null;
+
+        function sumarPunto() {
+            puntos += 1;
+            actualizarPuntos();
+        }
+
+        function multiplicador50() {
+            alert("Aquí iría el anuncio.");
+            puntos = Math.round(puntos * 1.5);
+            actualizarPuntos();
+        }
+
+        function actualizarPuntos() {
+            document.getElementById("puntos").textContent = puntos;
+        }
+
+        function guardarPuntaje() {
+            if (currentUser) {
+                db.ref("ranking").push({ nombre: currentUser.displayName, puntos: puntos });
+            }
+        }
+
+        function cargarRanking() {
+            db.ref("ranking").orderByChild("puntos").limitToLast(10).on("value", snapshot => {
+                let rankingHTML = "";
+                let rankingArray = [];
+
+                snapshot.forEach(child => {
+                    rankingArray.push(child.val());
+                });
+
+                rankingArray.reverse().forEach((jugador, index) => {
+                    rankingHTML += <p>${index + 1}. ${jugador.nombre}: ${jugador.puntos} puntos</p>;
+                });
+
+                document.getElementById("ranking").innerHTML = rankingHTML;
+            });
+        }
+
+        // Login con Google
+        function login() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(result => {
+                currentUser = result.user;
+                document.getElementById("user-info").innerHTML = Hola, ${currentUser.displayName};
+                document.getElementById("login-btn").style.display = "none";
+                document.getElementById("logout-btn").style.display = "block";
+                cargarRanking();
+            }).catch(error => {
+                console.error("Error de autenticación:", error);
+            });
+        }
+
+        // Logout
+        function logout() {
+            auth.signOut().then(() => {
+                currentUser = null;
+                document.getElementById("user-info").innerHTML = "";
+                document.getElementById("login-btn").style.display = "block";
+                document.getElementById("logout-btn").style.display = "none";
+                cargarRanking();
+            }).catch(error => {
+                console.error("Error al cerrar sesión:", error);
+            });
+        }
+
+        // Escuchar cambios en el estado de autenticación
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                currentUser = user;
+                document.getElementById("user-info").innerHTML = Hola, ${user.displayName};
+                document.getElementById("login-btn").style.display = "none";
+                document.getElementById("logout-btn").style.display = "block";
+                cargarRanking();
+            } else {
+                document.getElementById("user-info").innerHTML = "";
+                document.getElementById("login-btn").style.display = "block";
+                document.getElementById("logout-btn").style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
