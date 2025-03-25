@@ -48,6 +48,13 @@
         .btn-multiplicar {
             background: #ff9800; /* Naranja */
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .btn-multiplicar span {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         .btn-multiplicar:hover {
             background: #e68900;
@@ -59,7 +66,10 @@
     <h1>MyClickGain</h1>
     <p>Puntos: <span id="puntos">0</span></p>
     <button class="btn-click" onclick="sumarPunto()">¡Clickea aquí!</button>
-    <button class="btn-multiplicar" onclick="multiplicarPuntos()">Multiplicar puntos</button>
+    <button class="btn-multiplicar" onclick="multiplicador50()">
+        Multiplicador 50% <br>
+        <span>(Ver anuncio)</span>
+    </button>
 
     <script>
         let puntos = 0;
@@ -69,7 +79,8 @@
             actualizarPuntos();
         }
 
-        function multiplicarPuntos() {
+        function multiplicador50() {
+            alert("Aquí iría el anuncio (por ahora es solo un mensaje).");
             puntos *= 1.5; // Multiplica los puntos por 1.5
             actualizarPuntos();
         }
