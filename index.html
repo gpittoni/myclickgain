@@ -83,7 +83,7 @@
                 });
 
                 rankingArray.reverse().forEach((jugador, index) => {
-                    rankingHTML += <p>${index + 1}. ${jugador.nombre}: ${jugador.puntos} puntos</p>;
+                    rankingHTML += `<p>${index + 1}. ${jugador.nombre}: ${jugador.puntos} puntos</p>`;
                 });
 
                 document.getElementById("ranking").innerHTML = rankingHTML;
@@ -95,7 +95,7 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then(result => {
                 currentUser = result.user;
-                document.getElementById("user-info").innerHTML = Hola, ${currentUser.displayName};
+                document.getElementById("user-info").innerHTML = `Hola, ${currentUser.displayName}`;
                 document.getElementById("login-btn").style.display = "none";
                 document.getElementById("logout-btn").style.display = "block";
                 cargarRanking();
@@ -121,7 +121,7 @@
         auth.onAuthStateChanged(user => {
             if (user) {
                 currentUser = user;
-                document.getElementById("user-info").innerHTML = Hola, ${user.displayName};
+                document.getElementById("user-info").innerHTML = `Hola, ${user.displayName}`;
                 document.getElementById("login-btn").style.display = "none";
                 document.getElementById("logout-btn").style.display = "block";
                 cargarRanking();
