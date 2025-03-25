@@ -81,12 +81,12 @@
 
         function multiplicador50() {
             alert("Aquí iría el anuncio (por ahora es solo un mensaje).");
-            puntos *= 1.5; // Multiplica los puntos por 1.5
+            puntos = Math.round(puntos * 1.5); // Multiplica y redondea
             actualizarPuntos();
         }
 
         function actualizarPuntos() {
-            document.getElementById("puntos").textContent = puntos.toFixed(1);
+            document.getElementById("puntos").textContent = puntos;
         }
     </script>
 </body>
