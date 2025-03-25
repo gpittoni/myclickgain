@@ -28,8 +28,6 @@
             margin: 10px 0;
         }
         button {
-            background: #ff9800;
-            color: white;
             font-size: 1.2rem;
             border: none;
             padding: 12px 20px;
@@ -39,7 +37,19 @@
             transition: 0.3s;
             box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
         }
-        button:hover {
+        .btn-click {
+            background: #4CAF50; /* Verde */
+            color: white;
+        }
+        .btn-click:hover {
+            background: #43a047;
+            transform: scale(1.05);
+        }
+        .btn-multiplicar {
+            background: #ff9800; /* Naranja */
+            color: white;
+        }
+        .btn-multiplicar:hover {
             background: #e68900;
             transform: scale(1.05);
         }
@@ -48,8 +58,8 @@
 <body>
     <h1>MyClickGain</h1>
     <p>Puntos: <span id="puntos">0</span></p>
-    <button onclick="sumarPunto()">¡Clickea aquí!</button>
-    <button onclick="multiplicarPuntos()">Multiplicar puntos</button>
+    <button class="btn-click" onclick="sumarPunto()">¡Clickea aquí!</button>
+    <button class="btn-multiplicar" onclick="multiplicarPuntos()">Multiplicar puntos</button>
 
     <script>
         let puntos = 0;
