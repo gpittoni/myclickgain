@@ -4,74 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyClickGain</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        p {
-            font-size: 1.5rem;
-            margin: 10px 0;
-        }
-        button {
-            font-size: 1.2rem;
-            border: none;
-            padding: 12px 20px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.3s;
-            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .btn-click {
-            background: #4CAF50; /* Verde */
-            color: white;
-        }
-        .btn-click:hover {
-            background: #43a047;
-            transform: scale(1.05);
-        }
-        .btn-multiplicar {
-            background: #ff9800; /* Naranja */
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .btn-multiplicar span {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .btn-multiplicar:hover {
-            background: #e68900;
-            transform: scale(1.05);
-        }
+        body { font-family: Arial, sans-serif; text-align: center; background: linear-gradient(to bottom, #1e3c72, #2a5298); color: #ffffff; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { font-size: 2rem; }
+        p { font-size: 1.5rem; }
+        button { font-size: 1.2rem; border: none; padding: 12px 20px; margin: 10px; cursor: pointer; border-radius: 10px; transition: 0.3s; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2); }
+        .btn-click { background: #4CAF50; color: white; }
+        .btn-multiplicar { background: #ff9800; color: white; }
+        .ranking { margin-top: 20px; text-align: left; background: rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 10px; }
     </style>
 </head>
 <body>
     <h1>MyClickGain</h1>
     <p>Puntos: <span id="puntos">0</span></p>
     <button class="btn-click" onclick="sumarPunto()">¡Clickea aquí!</button>
-    <button class="btn-multiplicar" onclick="multiplicador50()">
-        Multiplicador 50% <br>
-        <span>(Ver anuncio)</span>
-    </button>
+    <button class="btn-multiplicar" onclick="multiplicador50()">Multiplicador 50%<br><span>(Ver anuncio)</span></button>
+
+    <h2>🏆 Ranking - Top 10</h2>
+    <div id="ranking" class="ranking"></div>
 
     <script>
+        // Configurar Firebase
+        const firebaseConfig = {
+            databaseURL: "TU_DATABASE_URL"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         let puntos = 0;
 
         function sumarPunto() {
@@ -80,14 +41,41 @@
         }
 
         function multiplicador50() {
-            alert("Aquí iría el anuncio (por ahora es solo un mensaje).");
-            puntos = Math.round(puntos * 1.5); // Multiplica y redondea
+            alert("Aquí iría el anuncio.");
+            puntos = Math.round(puntos * 1.5);
             actualizarPuntos();
         }
 
         function actualizarPuntos() {
             document.getElementById("puntos").textContent = puntos;
         }
+
+        function guardarPuntaje() {
+            const nombreJugador = "Jugador " + Math.floor(Math.random() * 1000);
+            db.ref("ranking").push({ nombre: nombreJugador, puntos: puntos });
+        }
+
+        function cargarRanking() {
+            db.ref("ranking").orderByChild("puntos").limitToLast(10).on("value", snapshot => {
+                let rankingHTML = "";
+                let rankingArray = [];
+
+                snapshot.forEach(child => {
+                    rankingArray.push(child.val());
+                });
+
+                rankingArray.reverse().forEach((jugador, index) => {
+                    rankingHTML += `<p>${index + 1}. ${jugador.nombre}: ${jugador.puntos} puntos</p>`;
+                });
+
+                document.getElementById("ranking").innerHTML = rankingHTML;
+            });
+        }
+
+        setInterval(() => {
+            guardarPuntaje();
+            cargarRanking();
+        }, 10000); // Guarda puntaje cada 10 segundos
     </script>
 </body>
 </html>
